@@ -11,6 +11,8 @@ const db_url = "";
 
 const UserModel = require('./models/UserModel.js');
 
+const userRoutes = require('./routes/user-routes.js');
+
 
 // Calling the express function will return an object
 // with all of the methods for handling HTTP
@@ -53,52 +55,12 @@ server.get(
     }
 );
 
-server.post(
-    '/user',
-    function(req, res) {
 
-        const newDocument = {
-            'firstname': req.body.firstname,
-            'lastname': req.body.lastname,
-            'email': req.body.email
-        }
+const userRoutes = require('./routes/user-routes.js');
 
-        UserModel
-        .create(newDocument)
-        .then(                                      // If the 'create' request is successful, then handle it
-            function(dbDocument) {
-                res.send( dbDocument );
-            }
-        )
-        .catch(
-            function(dbError) {                     // If the 'create' request is unsuccessful, catch the error
-                console.log(dbError);
-                res.send("An error occured");
-            }
-        );
-    }
-);
-
-
-server.get(
-    '/user',
-    function(req, res) {
-
-        UserModel
-        .find()
-        .then(
-            function(dbResponse) {
-                res.send(dbResponse);
-            }
-        )
-        .catch(
-            function(dbError){
-                console.log(dbError);
-                res.send('An error occured');
-            }
-        )
-
-    }
+server.use(
+    '/user',                // http://localhost:3011/user/
+    userRoutes
 );
 
 
