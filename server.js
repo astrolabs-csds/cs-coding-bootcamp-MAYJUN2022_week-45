@@ -57,7 +57,6 @@ server.post(
     '/user',
     function(req, res) {
 
-
         const newDocument = {
             'firstname': req.body.firstname,
             'lastname': req.body.lastname,
@@ -76,10 +75,31 @@ server.post(
                 console.log(dbError);
                 res.send("An error occured");
             }
-        )
+        );
     }
 );
 
+
+server.get(
+    '/user',
+    function(req, res) {
+
+        UserModel
+        .find()
+        .then(
+            function(dbResponse) {
+                res.send(dbResponse);
+            }
+        )
+        .catch(
+            function(dbError){
+                console.log(dbError);
+                res.send('An error occured');
+            }
+        )
+
+    }
+);
 
 
 /*
