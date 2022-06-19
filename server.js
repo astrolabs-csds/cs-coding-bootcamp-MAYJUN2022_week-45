@@ -6,7 +6,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const db_url = "";
+const db_url = "mongodb+srv://admin01:db12345@cluster0.oikl7.mongodb.net/?retryWrites=true&w=majority";
 
 
 const UserModel = require('./models/UserModel.js');
@@ -54,9 +54,6 @@ server.get(
         res.send("<h1>Hello!</h1>");
     }
 );
-
-
-const userRoutes = require('./routes/user-routes.js');
 
 server.use(
     '/user',                // http://localhost:3011/user/
