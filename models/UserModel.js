@@ -15,10 +15,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "password": {
-        type: String,
-        required: true
-    },
+    // "password": {
+    //     type: String,
+    //     required: true
+    // },
     "date_created": {
         type: Date,
         required: true,
@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     },
     "phonenumber": {
         type: String,
-        required: true
+        required: false
     },
     "photoURL": {
         type: String,

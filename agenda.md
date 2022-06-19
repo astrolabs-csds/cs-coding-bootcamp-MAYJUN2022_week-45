@@ -12,3 +12,11 @@ Agenda 14/06/2022
 (4) Configure Express for POST requests
 (5) Create account on MongoDB
 (6) Schemas, Models, and Documents
+
+
+
+Agenda 19/06/2022
+(1) Example of POST request for creating from 'users'
+(2) Example of GET request for finding from 'users'
+(3) Organize the backend code 
+(4) Overview of Asyncronousity (.then(), .catch(), async, await)

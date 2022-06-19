@@ -25,3 +25,24 @@ to a TCP/IP port on the host network.
 
 Localhost
 The domain name for IP address of the host network, 127,0.0.1, on any PC
+
+
+
+
+Database
+A group of Collection.
+A MongoDB Database is like an Excel Workbook.
+
+Collection
+A group of Documents.
+A MongoDB Collection is like an Excel Sheet.
+
+Document
+A JSON object.
+A MongoDB Document is like a row in an Excel Sheet.
+
+Schema
+An outline of the documents accepted in a collection
+
+Model
+A object with CRUD methods (functions) for only one particular collection

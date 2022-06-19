@@ -6,7 +6,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const db_url = "mongodb+srv://admin01:db12345@cluster0.oikl7.mongodb.net/?retryWrites=true&w=majority";
+const db_url = "";
+
+
+const UserModel = require('./models/UserModel.js');
+
 
 // Calling the express function will return an object
 // with all of the methods for handling HTTP
@@ -52,7 +56,27 @@ server.get(
 server.post(
     '/user',
     function(req, res) {
-        res.send( req.body.firstname );
+
+
+        const newDocument = {
+            'firstname': req.body.firstname,
+            'lastname': req.body.lastname,
+            'email': req.body.email
+        }
+
+        UserModel
+        .create(newDocument)
+        .then(                                      // If the 'create' request is successful, then handle it
+            function(dbDocument) {
+                res.send( dbDocument );
+            }
+        )
+        .catch(
+            function(dbError) {                     // If the 'create' request is unsuccessful, catch the error
+                console.log(dbError);
+                res.send("An error occured");
+            }
+        )
     }
 );
 
