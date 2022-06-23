@@ -18,5 +18,18 @@ Agenda 14/06/2022
 Agenda 19/06/2022
 (1) Example of POST request for creating from 'users'
 (2) Example of GET request for finding from 'users'
-(3) Organize the backend code 
-(4) Overview of Asyncronousity (.then(), .catch(), async, await)
+(3) Overview of Asyncronousity (.then(), .catch(), async, await)
+(4) Organize the backend code 
+
+
+Agenda 21/06/2022
+(1) Hashing passwords using Bcrypt
+(2) Middleware for authenticating users with PassportJS
+(3) Update for environment variables
+
+
+Agenda 23/06/2022
+(1) Create account on Heroku
+(2) Deploy the backend to Heroku
+(3) Create login route
+(4) Generating JWT (JSON Web Tokens)
