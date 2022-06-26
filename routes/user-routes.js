@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
 
 const UserModel = require('../models/UserModel.js');
 
@@ -57,7 +59,6 @@ router.post(
     }
 );
 
-
 router.get(
     '/find',
     function(req, res) {
@@ -76,6 +77,111 @@ router.get(
             }
         )
 
+    }
+);
+
+
+// Login user
+router.post('/login', 
+    (req, res) => {
+
+        // Capture form data
+        const formData = {
+            email: req.body.email,
+            password: req.body.password,
+        }
+
+        // Check if email exists
+        UserModel
+        .findOne({ email: formData.email })
+        .then(
+            (dbDocument) => {
+                // If email exists
+                if(dbDocument) {
+                    // Compare the password sent againt password in database
+                    bcryptjs.compare(
+                        formData.password,          // password user sent
+                        dbDocument.password         // password in database
+                    )
+                    .then(
+                        (isMatch) => {
+                            // If passwords match...
+                            if(isMatch) {
+                                // Generate the Payload
+                                const payload = {
+                                    _id: dbDocument._id,
+                                    email: dbDocument.email
+                                }
+                                // Generate the jsonwebtoken
+                                jwt
+                                .sign(
+                                    payload,
+                                    jwtSecret,
+                                    (err, jsonwebtoken) => {
+                                        if(err) {
+                                            console.log(err);
+                                            res.status(501).json(
+                                                {
+                                                    "message": "Something went wrong"
+                                                }
+                                            );
+                                        }
+                                        else {
+                                            // Send the jsonwebtoken to the client
+                                            res.json(
+                                                {
+                                                    "message": {
+                                                        email: dbDocument.email,
+                                                        avatar: dbDocument.avatar,
+                                                        firstName: dbDocument.firstName,
+                                                        lastName: dbDocument.lastName,
+                                                        jsonwebtoken: jsonwebtoken
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    }
+                                )
+                            }
+                            // If passwords don't match, reject login
+                            else {
+                                res.status(401).json(
+                                    {
+                                        "message": "Wrong email or password"
+                                    }
+                                );
+                            }
+                        }
+                    )
+                    .catch(
+                        (err) => {
+                            console.log(err)
+                        }
+                    )
+                }
+                // If email does not exist
+                else {
+                    // reject the login
+                    res.status(401).json(
+                        {
+                            "message": "Wrong email or password"
+                        }
+                    );
+                }
+            }
+        )
+        .catch(
+            (err) => {
+                console.log(err);
+
+                res.status(503).json(
+                    {
+                        "status": "not ok",
+                        "message": "Please try again later"
+                    }
+                );
+            }
+        )
     }
 );
 
